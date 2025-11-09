@@ -1,15 +1,15 @@
 import { Listing } from "@/types/listing";
 import ListingCard from "./ListingCard";
-import { Coffee, Hotel, Stethoscope, Store } from "lucide-react";
+import { Coffee, Hotel, Stethoscope, Store, TreePine, Scissors } from "lucide-react";
 
 interface CategorySectionProps {
-  category: "cafe" | "hotel" | "vet" | "petshop";
+  category: "cafe" | "hotel" | "vet" | "petshop" | "park" | "grooming";
   listings: Listing[];
 }
 
 const categoryInfo = {
   cafe: {
-    title: "Pet-Friendly Cafés",
+    title: "Pet-Friendly Cafés & Restaurants",
     icon: Coffee,
     description: "Enjoy coffee and treats with your furry companion",
   },
@@ -19,7 +19,7 @@ const categoryInfo = {
     description: "Comfortable stays for you and your pet",
   },
   vet: {
-    title: "Veterinarians",
+    title: "Veterinarians & Boarding",
     icon: Stethoscope,
     description: "Professional care for your pet's health",
   },
@@ -27,6 +27,16 @@ const categoryInfo = {
     title: "Pet Shops",
     icon: Store,
     description: "Everything your pet needs in one place",
+  },
+  park: {
+    title: "Dog Parks & Outdoor Spaces",
+    icon: TreePine,
+    description: "Open spaces for your dog to play and socialize",
+  },
+  grooming: {
+    title: "Grooming Salons",
+    icon: Scissors,
+    description: "Professional grooming services for your pet",
   },
 };
 

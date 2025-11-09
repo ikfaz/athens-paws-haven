@@ -29,20 +29,35 @@ const ListingCard = ({ listing }: ListingCardProps) => {
         <p className="text-sm text-muted-foreground">{listing.description}</p>
         
         <div className="space-y-2 text-sm">
-          <a 
-            href={`tel:${listing.phone}`}
-            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
-          >
-            <Phone className="w-4 h-4" />
-            <span>{listing.phone}</span>
-          </a>
-          <a 
-            href={`mailto:${listing.email}`}
-            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
-          >
-            <Mail className="w-4 h-4" />
-            <span>{listing.email}</span>
-          </a>
+          {listing.phone && (
+            <a 
+              href={`tel:${listing.phone}`}
+              className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              <span>{listing.phone}</span>
+            </a>
+          )}
+          {listing.email && (
+            <a 
+              href={`mailto:${listing.email}`}
+              className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="w-4 h-4" />
+              <span>{listing.email}</span>
+            </a>
+          )}
+          {listing.website && (
+            <a 
+              href={`https://${listing.website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>{listing.website}</span>
+            </a>
+          )}
         </div>
 
         <Button 

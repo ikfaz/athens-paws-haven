@@ -1,5 +1,6 @@
 import heroImage from "@/assets/athens-hero.jpg";
 import { Button } from "@/components/ui/button";
+import { Coffee, Hotel, TreePine, Store, Stethoscope, Scissors } from "lucide-react";
 
 interface HeroProps {
   onCategoryClick: (category: string) => void;
@@ -25,18 +26,60 @@ const Hero = ({ onCategoryClick }: HeroProps) => {
           Discover the best pet-friendly places in Athens. From cozy cafés to welcoming hotels.
         </p>
         
-        <div className="flex flex-wrap gap-4 justify-center animate-fade-in">
-          <Button variant="hero" size="lg" onClick={() => onCategoryClick("cafe")}>
-            Cafés
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto animate-fade-in">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("hotel")}
+            className="h-auto py-4 flex-col"
+          >
+            <Hotel className="w-6 h-6 mb-2" />
+            <span>Hotels</span>
           </Button>
-          <Button variant="hero" size="lg" onClick={() => onCategoryClick("hotel")}>
-            Hotels
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("cafe")}
+            className="h-auto py-4 flex-col"
+          >
+            <Coffee className="w-6 h-6 mb-2" />
+            <span>Cafés</span>
           </Button>
-          <Button variant="hero" size="lg" onClick={() => onCategoryClick("vet")}>
-            Veterinarians
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("park")}
+            className="h-auto py-4 flex-col"
+          >
+            <TreePine className="w-6 h-6 mb-2" />
+            <span>Parks</span>
           </Button>
-          <Button variant="hero" size="lg" onClick={() => onCategoryClick("petshop")}>
-            Pet Shops
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("petshop")}
+            className="h-auto py-4 flex-col"
+          >
+            <Store className="w-6 h-6 mb-2" />
+            <span>Shops</span>
+          </Button>
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("vet")}
+            className="h-auto py-4 flex-col"
+          >
+            <Stethoscope className="w-6 h-6 mb-2" />
+            <span>Vets</span>
+          </Button>
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("grooming")}
+            className="h-auto py-4 flex-col"
+          >
+            <Scissors className="w-6 h-6 mb-2" />
+            <span>Grooming</span>
           </Button>
         </div>
       </div>

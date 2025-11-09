@@ -21,10 +21,12 @@ const Index = () => {
       <Hero onCategoryClick={scrollToCategory} />
       
       <div className="bg-background">
-        <CategorySection category="cafe" listings={listings} />
         <CategorySection category="hotel" listings={listings} />
-        <CategorySection category="vet" listings={listings} />
+        <CategorySection category="cafe" listings={listings} />
+        <CategorySection category="park" listings={listings} />
         <CategorySection category="petshop" listings={listings} />
+        <CategorySection category="vet" listings={listings} />
+        <CategorySection category="grooming" listings={listings} />
       </div>
 
       <footer className="bg-secondary/50 py-8 mt-16">
