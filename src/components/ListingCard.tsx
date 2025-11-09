@@ -60,21 +60,21 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           )}
         </div>
 
-        <a 
-          href={listing.mapsLink} 
-          target="_blank" 
-          rel="noopener noreferrer"
+        <Button 
+          variant="default" 
           className="w-full"
+          asChild
         >
-          <Button 
-            variant="default" 
-            className="w-full"
+          <a 
+            href={listing.mapsLink} 
+            target="_blank" 
+            rel="noopener noreferrer"
           >
             <MapPin className="w-4 h-4" />
             View on Google Maps
             <ExternalLink className="w-4 h-4" />
-          </Button>
-        </a>
+          </a>
+        </Button>
       </CardContent>
     </Card>
   );
