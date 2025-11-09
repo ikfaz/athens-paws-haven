@@ -1,10 +1,4 @@
 import { Listing } from "@/types/listing";
-import cafeImage from "@/assets/cafe-sample.jpg";
-import hotelImage from "@/assets/hotel-sample.jpg";
-import vetImage from "@/assets/vet-sample.jpg";
-import petshopImage from "@/assets/petshop-sample.jpg";
-import parkImage from "@/assets/park-sample.jpg";
-import groomingImage from "@/assets/grooming-sample.jpg";
 
 export const listings: Listing[] = [
   // Hotels
@@ -17,7 +11,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0325 4350",
     website: "livingyard.gr",
     mapsLink: "https://maps.google.com/?q=Thissio+Athens+105+55",
-    image: hotelImage,
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "hotel thissio",
   },
   {
@@ -29,7 +23,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0924 8090",
     website: "livingyard.gr",
     mapsLink: "https://maps.google.com/?q=Acropolis+area+Athens+117+42",
-    image: hotelImage,
+    image: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "hotel acropolis",
   },
   {
@@ -41,7 +35,7 @@ export const listings: Listing[] = [
     phone: "+30 69 4455 6677",
     website: "hestiaathens.gr",
     mapsLink: "https://maps.google.com/?q=Averof+7+Athens+104+33",
-    image: hotelImage,
+    image: "https://images.unsplash.com/photo-1582719478250-c89afe8499c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "apartments",
   },
   {
@@ -53,7 +47,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0922 4044",
     website: "athensbackpackers.com",
     mapsLink: "https://maps.google.com/?q=Makri+12+Athens+117+42",
-    image: hotelImage,
+    image: "https://images.pexels.com/photos/2506993/pexels-photo-2506993.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "hostel",
   },
   {
@@ -65,7 +59,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0324 6200",
     website: "perianthhotel.com",
     mapsLink: "https://maps.google.com/?q=Limpona+2+Athens+105+60",
-    image: hotelImage,
+    image: "https://images.unsplash.com/photo-1542314831-0682db4ed9c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "luxury",
   },
   {
@@ -77,7 +71,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0333 0000",
     website: "theasishotel.gr",
     mapsLink: "https://maps.google.com/?q=Leof+Andrea+Siggrou+14+Athens",
-    image: hotelImage,
+    image: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "central",
   },
   {
@@ -89,7 +83,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0923 8302",
     website: "athensgate.gr",
     mapsLink: "https://maps.google.com/?q=Leof+Andrea+Siggrou+10+Athens",
-    image: hotelImage,
+    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "rooftop",
   },
   {
@@ -101,7 +95,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0366 6200",
     website: "monsieurdidot.com",
     mapsLink: "https://maps.google.com/?q=Sina+33+Athens+106+80",
-    image: hotelImage,
+    image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "boutique",
   },
 
@@ -115,7 +109,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0362 6666",
     website: "atheneeathens.gr",
     mapsLink: "https://maps.google.com/?q=Kolonaki+Athens+106+75",
-    image: cafeImage,
+    image: "https://images.unsplash.com/photo-1517248135467-2c7ed3da9bd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "fine dining",
   },
   {
@@ -127,7 +121,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0924 2424",
     website: "fairytaleathens.gr",
     mapsLink: "https://maps.google.com/?q=Neos+Kosmos+Athens+117+45",
-    image: cafeImage,
+    image: "https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "brunch",
   },
   {
@@ -139,7 +133,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0991 2345",
     website: "momoasianbar.gr",
     mapsLink: "https://maps.google.com/?q=Argyroupoli+Athens+164+52",
-    image: cafeImage,
+    image: "https://images.unsplash.com/photo-1555396273-08005def47b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "asian",
   },
   {
@@ -151,7 +145,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0801 2345",
     website: "blueparrot.gr",
     mapsLink: "https://maps.google.com/?q=Kifisia+Athens+145+64",
-    image: cafeImage,
+    image: "https://images.pexels.com/photos/941864/pexels-photo-941864.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "cocktails",
   },
   {
@@ -163,7 +157,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0325 1111",
     website: "ananacoffee.gr",
     mapsLink: "https://maps.google.com/?q=Syntagma+Athens+105+63",
-    image: cafeImage,
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "vegan",
   },
 
@@ -175,7 +169,7 @@ export const listings: Listing[] = [
     address: "Probonas Hill, Athens",
     description: "Fenced, separate small/large areas.",
     mapsLink: "https://maps.google.com/?q=Probonas+Hill+Athens",
-    image: parkImage,
+    image: "https://images.pexels.com/photos/220938/pexels-photo-220938.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "off-leash",
   },
   {
@@ -186,7 +180,7 @@ export const listings: Listing[] = [
     description: "Huge public garden, leashed walks.",
     website: "nationalgarden.gr",
     mapsLink: "https://maps.google.com/?q=Leof+Vasilissis+Amalias+Athens",
-    image: parkImage,
+    image: "https://images.unsplash.com/photo-1587568556810-5b6e5e3225c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "garden",
   },
 
@@ -200,7 +194,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0523 4567",
     website: "petsandfriends.gr",
     mapsLink: "https://maps.google.com/?q=Omonoia+Square+Athens+104+31",
-    image: petshopImage,
+    image: "https://images.pexels.com/photos/5733000/pexels-photo-5733000.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "grooming",
   },
   {
@@ -212,7 +206,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0894 1234",
     website: "petcity.gr",
     mapsLink: "https://maps.google.com/?q=Glyfada+Athens+166+74",
-    image: petshopImage,
+    image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "chain",
   },
 
@@ -226,7 +220,7 @@ export const listings: Listing[] = [
     phone: "+30 69 8765 4321",
     website: "ilovedogs.gr",
     mapsLink: "https://maps.google.com/?q=Northern+suburbs+Athens",
-    image: vetImage,
+    image: "https://images.pexels.com/photos/551629/pexels-photo-551629.jpeg?auto=compress&cs=tinysrgb&w=800",
     tag: "boarding",
   },
   {
@@ -237,7 +231,7 @@ export const listings: Listing[] = [
     description: "Self-service bathing + grooming.",
     website: "paw.gr",
     mapsLink: "https://maps.google.com/?q=Central+Athens",
-    image: groomingImage,
+    image: "https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     tag: "self-service",
   },
 ];
