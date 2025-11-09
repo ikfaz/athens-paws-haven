@@ -1,13 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useRef } from "react";
+import Hero from "@/components/Hero";
+import CategorySection from "@/components/CategorySection";
+import { listings } from "@/data/listings";
 
 const Index = () => {
+  const cafeRef = useRef<HTMLElement>(null);
+  const hotelRef = useRef<HTMLElement>(null);
+  const vetRef = useRef<HTMLElement>(null);
+  const petshopRef = useRef<HTMLElement>(null);
+
+  const scrollToCategory = (category: string) => {
+    const element = document.getElementById(category);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <main className="min-h-screen">
+      <Hero onCategoryClick={scrollToCategory} />
+      
+      <div className="bg-background">
+        <CategorySection category="cafe" listings={listings} />
+        <CategorySection category="hotel" listings={listings} />
+        <CategorySection category="vet" listings={listings} />
+        <CategorySection category="petshop" listings={listings} />
       </div>
-    </div>
+
+      <footer className="bg-secondary/50 py-8 mt-16">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground">
+            © 2025 Pet-Friendly Athens. Discover the best places for you and your pet.
+          </p>
+        </div>
+      </footer>
+    </main>
   );
 };
 
