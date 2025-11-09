@@ -1,4 +1,10 @@
 import { Listing } from "@/types/listing";
+import hotelSample from "@/assets/hotel-sample.jpg";
+import cafeSample from "@/assets/cafe-sample.jpg";
+import parkSample from "@/assets/park-sample.jpg";
+import petshopSample from "@/assets/petshop-sample.jpg";
+import vetSample from "@/assets/vet-sample.jpg";
+import groomingSample from "@/assets/grooming-sample.jpg";
 
 export const listings: Listing[] = [
   // Hotels
@@ -11,7 +17,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0325 4350",
     website: "livingyard.gr",
     mapsLink: "https://maps.google.com/?q=Thissio+Athens+105+55",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: hotelSample,
     tag: "hotel thissio",
   },
   {
@@ -109,7 +115,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0362 6666",
     website: "atheneeathens.gr",
     mapsLink: "https://maps.google.com/?q=Kolonaki+Athens+106+75",
-    image: "https://images.unsplash.com/photo-1517248135467-2c7ed3da9bd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: cafeSample,
     tag: "fine dining",
   },
   {
@@ -169,7 +175,7 @@ export const listings: Listing[] = [
     address: "Probonas Hill, Athens",
     description: "Fenced, separate small/large areas.",
     mapsLink: "https://maps.google.com/?q=Probonas+Hill+Athens",
-    image: "https://images.pexels.com/photos/220938/pexels-photo-220938.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: parkSample,
     tag: "off-leash",
   },
   {
@@ -194,7 +200,7 @@ export const listings: Listing[] = [
     phone: "+30 21 0523 4567",
     website: "petsandfriends.gr",
     mapsLink: "https://maps.google.com/?q=Omonoia+Square+Athens+104+31",
-    image: "https://images.pexels.com/photos/5733000/pexels-photo-5733000.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: petshopSample,
     tag: "grooming",
   },
   {
@@ -220,7 +226,7 @@ export const listings: Listing[] = [
     phone: "+30 69 8765 4321",
     website: "ilovedogs.gr",
     mapsLink: "https://maps.google.com/?q=Northern+suburbs+Athens",
-    image: "https://images.pexels.com/photos/551629/pexels-photo-551629.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: vetSample,
     tag: "boarding",
   },
   {
@@ -231,7 +237,7 @@ export const listings: Listing[] = [
     description: "Self-service bathing + grooming.",
     website: "paw.gr",
     mapsLink: "https://maps.google.com/?q=Central+Athens",
-    image: "https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: groomingSample,
     tag: "self-service",
   },
 ];
