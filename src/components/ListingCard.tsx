@@ -63,17 +63,11 @@ const ListingCard = ({ listing }: ListingCardProps) => {
         <Button 
           variant="default" 
           className="w-full"
-          asChild
+          onClick={() => window.open(listing.mapsLink, '_blank', 'noopener,noreferrer')}
         >
-          <a 
-            href={listing.mapsLink} 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <MapPin className="w-4 h-4" />
-            View on Google Maps
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <MapPin className="w-4 h-4" />
+          View on Google Maps
+          <ExternalLink className="w-4 h-4" />
         </Button>
       </CardContent>
     </Card>
