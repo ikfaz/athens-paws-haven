@@ -1,13 +1,13 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import Hero from "@/components/Hero";
 import CategorySection from "@/components/CategorySection";
-import { listings } from "@/data/listings";
+import { useListings } from "@/hooks/useListings";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
-  const cafeRef = useRef<HTMLElement>(null);
-  const hotelRef = useRef<HTMLElement>(null);
-  const vetRef = useRef<HTMLElement>(null);
-  const petshopRef = useRef<HTMLElement>(null);
+  const { data: listings, isLoading, error } = useListings();
 
   const scrollToCategory = (category: string) => {
     const element = document.getElementById(category);
@@ -16,24 +16,60 @@ const Index = () => {
     }
   };
 
+  if (error) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Unable to load listings</h2>
+          <p className="text-muted-foreground mb-4">Please try again later</p>
+          <Button onClick={() => window.location.reload()}>Refresh</Button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen">
       <Hero onCategoryClick={scrollToCategory} />
       
       <div className="bg-background">
-        <CategorySection category="hotel" listings={listings} />
-        <CategorySection category="cafe" listings={listings} />
-        <CategorySection category="park" listings={listings} />
-        <CategorySection category="petshop" listings={listings} />
-        <CategorySection category="vet" listings={listings} />
-        <CategorySection category="grooming" listings={listings} />
+        {isLoading ? (
+          <div className="container mx-auto px-4 py-16">
+            <div className="space-y-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="space-y-4">
+                  <Skeleton className="h-8 w-48" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[1, 2, 3].map((j) => (
+                      <Skeleton key={j} className="h-64" />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            <CategorySection category="hotel" listings={listings || []} />
+            <CategorySection category="cafe" listings={listings || []} />
+            <CategorySection category="park" listings={listings || []} />
+            <CategorySection category="petshop" listings={listings || []} />
+            <CategorySection category="vet" listings={listings || []} />
+            <CategorySection category="grooming" listings={listings || []} />
+          </>
+        )}
       </div>
 
       <footer className="bg-secondary/50 py-8 mt-16">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-muted-foreground">
-            © 2025 Pet-Friendly Athens. Discover the best places for you and your pet.
-          </p>
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center">
+            <p className="text-muted-foreground">
+              © 2025 Pet-Friendly Athens. Discover the best places for you and your pet.
+            </p>
+            <Button variant="ghost" asChild>
+              <Link to="/admin/login">Admin</Link>
+            </Button>
+          </div>
         </div>
       </footer>
     </main>
