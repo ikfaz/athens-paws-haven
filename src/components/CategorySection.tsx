@@ -9,7 +9,7 @@ interface CategorySectionProps {
 
 const categoryInfo = {
   cafe: {
-    title: "Pet-Friendly Cafés & Restaurants",
+    title: "Pet-Friendly Cafes & Restaurants",
     icon: Coffee,
     description: "Enjoy coffee and treats with your furry companion",
   },
