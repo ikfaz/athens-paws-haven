@@ -43,7 +43,7 @@ const Hero = ({ onCategoryClick }: HeroProps) => {
             className="h-auto py-4 flex-col"
           >
             <Coffee className="w-6 h-6 mb-2" />
-            <span>Cafes & Restaurants</span>
+            <span>Cafés</span>
           </Button>
           <Button 
             variant="hero" 
