@@ -1,6 +1,6 @@
 import heroImage from "@/assets/athens-hero.jpg";
 import { Button } from "@/components/ui/button";
-import { Coffee, Hotel, TreePine, Store, Stethoscope, Scissors } from "lucide-react";
+import { Coffee, Hotel, TreePine, Store, Stethoscope, Scissors, Car } from "lucide-react";
 
 interface HeroProps {
   onCategoryClick: (category: string) => void;
@@ -80,6 +80,15 @@ const Hero = ({ onCategoryClick }: HeroProps) => {
           >
             <Scissors className="w-6 h-6 mb-2" />
             <span>Grooming</span>
+          </Button>
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => onCategoryClick("taxi")}
+            className="h-auto py-4 flex-col"
+          >
+            <Car className="w-6 h-6 mb-2" />
+            <span>Pet Taxi</span>
           </Button>
         </div>
       </div>

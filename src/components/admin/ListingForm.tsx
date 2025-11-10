@@ -63,6 +63,7 @@ export const ListingForm = ({ onSubmit, defaultValues, isLoading }: ListingFormP
             <SelectItem value="petshop">Pet Shop</SelectItem>
             <SelectItem value="park">Park</SelectItem>
             <SelectItem value="grooming">Grooming</SelectItem>
+            <SelectItem value="taxi">Pet Taxi Friendly</SelectItem>
           </SelectContent>
         </Select>
         {errors.category && <p className="text-sm text-destructive">{errors.category.message}</p>}

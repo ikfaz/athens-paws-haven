@@ -56,6 +56,7 @@ const Index = () => {
             <CategorySection category="petshop" listings={listings || []} />
             <CategorySection category="vet" listings={listings || []} />
             <CategorySection category="grooming" listings={listings || []} />
+            <CategorySection category="taxi" listings={listings || []} />
           </>
         )}
       </div>

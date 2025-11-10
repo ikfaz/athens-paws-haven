@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const listingSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  category: z.enum(["cafe", "hotel", "vet", "petshop", "park", "grooming"], {
+  category: z.enum(["cafe", "hotel", "vet", "petshop", "park", "grooming", "taxi"], {
     required_error: "Please select a category",
   }),
   address: z.string().trim().min(1, "Address is required").max(200, "Address must be less than 200 characters"),
