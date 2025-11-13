@@ -2,6 +2,7 @@ import { Listing } from "@/types/listing";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
+import { stripProtocol, ensureProtocol } from "@/lib/utils";
 
 interface ListingCardProps {
   listing: Listing;
@@ -72,13 +73,13 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           )}
           {listing.website && (
             <a 
-              href={`https://${listing.website}`}
+              href={ensureProtocol(listing.website)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
-              <span>{listing.website}</span>
+              <span>{stripProtocol(listing.website)}</span>
             </a>
           )}
         </div>
