@@ -28,11 +28,24 @@ const Index = () => {
     );
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Pet-Friendly Athens",
+    "description": "Complete directory of pet-friendly places in Athens",
+    "url": "https://petfriendlyathens.com"
+  };
+
   return (
-    <main className="min-h-screen">
-      <Hero onCategoryClick={scrollToCategory} />
-      
-      <div className="bg-background">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="min-h-screen">
+        <Hero onCategoryClick={scrollToCategory} />
+        
+        <main className="bg-background">
         {isLoading ? (
           <div className="container mx-auto px-4 py-16">
             <div className="space-y-8">
@@ -59,9 +72,9 @@ const Index = () => {
             <CategorySection category="taxi" listings={listings || []} />
           </>
         )}
-      </div>
+      </main>
 
-      <footer className="bg-secondary/50 py-8 mt-16">
+      <footer className="bg-secondary/50 py-8 mt-16" role="contentinfo">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-center md:text-left">
@@ -84,7 +97,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </main>
+    </div>
+    </>
   );
 };
 

@@ -8,11 +8,11 @@ interface HeroProps {
 
 const Hero = ({ onCategoryClick }: HeroProps) => {
   return (
-    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
+    <header className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Athens with pets"
+          alt="Pet-friendly locations in Athens, Greece - Dogs and owners enjoying outdoor cafes and parks"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-background" />
@@ -26,7 +26,7 @@ const Hero = ({ onCategoryClick }: HeroProps) => {
           Discover the best pet-friendly places in Athens. From cozy cafés to welcoming hotels.
         </p>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto animate-fade-in">
+        <nav aria-label="Category navigation" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto animate-fade-in">
           <Button 
             variant="hero" 
             size="lg" 
@@ -90,9 +90,9 @@ const Hero = ({ onCategoryClick }: HeroProps) => {
             <Car className="w-6 h-6 mb-2" />
             <span>Pet Taxi</span>
           </Button>
-        </div>
+        </nav>
       </div>
-    </section>
+    </header>
   );
 };
 
