@@ -63,13 +63,24 @@ const Index = () => {
 
       <footer className="bg-secondary/50 py-8 mt-16">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <p className="text-muted-foreground">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-muted-foreground text-center md:text-left">
               © 2025 Pet-Friendly Athens. Discover the best places for you and your pet.
             </p>
-            <Button variant="ghost" asChild>
-              <Link to="/admin/login">Admin</Link>
-            </Button>
+            <div className="flex flex-wrap gap-4 items-center justify-center">
+              <Button variant="link" asChild className="text-muted-foreground">
+                <Link to="/privacy-policy">Privacy Policy</Link>
+              </Button>
+              <Button variant="link" asChild className="text-muted-foreground">
+                <Link to="/terms-of-service">Terms of Service</Link>
+              </Button>
+              <Button variant="link" asChild className="text-muted-foreground">
+                <Link to="/cookie-policy">Cookie Policy</Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link to="/admin/login">Admin</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </footer>
