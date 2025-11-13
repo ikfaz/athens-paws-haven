@@ -54,21 +54,23 @@ const CategorySection = ({ category, listings }: CategorySectionProps) => {
   if (categoryListings.length === 0) return null;
 
   return (
-    <section id={category} className="py-16 scroll-mt-20">
+    <section id={category} className="py-16 scroll-mt-20" aria-labelledby={`${category}-heading`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 bg-primary/10 rounded-lg">
+        <header className="flex items-center gap-3 mb-4">
+          <div className="p-3 bg-primary/10 rounded-lg" aria-hidden="true">
             <Icon className="w-8 h-8 text-primary" />
           </div>
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold">{info.title}</h2>
+            <h2 id={`${category}-heading`} className="text-3xl md:text-4xl font-bold">{info.title}</h2>
             <p className="text-muted-foreground">{info.description}</p>
           </div>
-        </div>
+        </header>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" role="list">
           {categoryListings.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} />
+            <article key={listing.id} role="listitem">
+              <ListingCard listing={listing} />
+            </article>
           ))}
         </div>
       </div>
