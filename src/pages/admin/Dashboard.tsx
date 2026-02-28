@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useListings, useDeleteListing } from "@/hooks/useListings";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, LogOut, Home } from "lucide-react";
+import { ImportListings } from "@/components/admin/ImportListings";
 import { Listing } from "@/types/listing";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ListingForm } from "@/components/admin/ListingForm";
@@ -97,11 +98,12 @@ const Dashboard = () => {
                 <CardTitle>Quick Actions</CardTitle>
                 <CardDescription>Manage your listings</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-2">
                 <Button className="w-full" onClick={() => navigate("/admin/add-listing")}>
                   <Plus className="mr-2 h-4 w-4" />
                   Add New Listing
                 </Button>
+                <ImportListings />
               </CardContent>
             </Card>
           </div>
