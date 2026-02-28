@@ -1,1 +1,4 @@
 project_id = "akjeuaovqbikwzlfmgcz"
+
+[functions.import-listings]
+verify_jwt = false
