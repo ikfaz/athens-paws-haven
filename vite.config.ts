@@ -9,30 +9,6 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (!id.includes("node_modules")) {
-            return undefined;
-          }
-          if (id.includes("react") || id.includes("scheduler")) {
-            return "vendor-react";
-          }
-          if (id.includes("react-router")) {
-            return "vendor-router";
-          }
-          if (id.includes("@supabase")) {
-            return "vendor-supabase";
-          }
-          if (id.includes("@tanstack")) {
-            return "vendor-query";
-          }
-          return "vendor";
-        },
-      },
-    },
-  },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
