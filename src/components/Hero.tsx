@@ -15,7 +15,7 @@ const Hero = ({ onCategoryClick, onExploreClick }: HeroProps) => {
   };
 
   const handleExploreClick = () => {
-    trackEvent("explore_listings_click", { source: "hero" });
+    trackEvent("browse_categories_click", { source: "hero" });
     onExploreClick();
   };
 
@@ -43,7 +43,7 @@ const Hero = ({ onCategoryClick, onExploreClick }: HeroProps) => {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8 animate-fade-in">
           <Button size="lg" variant="default" onClick={handleExploreClick}>
-            Explore Listings
+            Browse Categories
           </Button>
           <Button size="lg" variant="hero" asChild>
             <a

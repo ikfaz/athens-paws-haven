@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Coffee, Hotel, TreePine, Store, Stethoscope, Scissors, Car } from "lucide-react";
 import Hero from "@/components/Hero";
-import CategorySection from "@/components/CategorySection";
 import { useListings } from "@/hooks/useListings";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,38 +17,77 @@ const CATEGORY_ORDER: Listing["category"][] = [
   "taxi",
 ];
 
+const categoryMeta: Record<
+  Listing["category"],
+  { label: string; description: string; icon: typeof Hotel }
+> = {
+  hotel: {
+    label: "Hotels",
+    description: "Pet-friendly stays and accommodation",
+    icon: Hotel,
+  },
+  cafe: {
+    label: "Cafes & Restaurants",
+    description: "Places to eat and drink with pets",
+    icon: Coffee,
+  },
+  park: {
+    label: "Parks",
+    description: "Outdoor spaces for walks and play",
+    icon: TreePine,
+  },
+  petshop: {
+    label: "Pet Shops",
+    description: "Food, toys, and pet essentials",
+    icon: Store,
+  },
+  vet: {
+    label: "Vets",
+    description: "Veterinary clinics and pet care",
+    icon: Stethoscope,
+  },
+  grooming: {
+    label: "Grooming",
+    description: "Bathing and grooming services",
+    icon: Scissors,
+  },
+  taxi: {
+    label: "Pet Taxi",
+    description: "Transport services for pets",
+    icon: Car,
+  },
+};
+
 const Index = () => {
   useSEO({
-    title: "Pet-Friendly Athens Greece | Dog & Cat Cafes, Hotels & Parks",
+    title: "Pet-Friendly Athens Categories | Hotels, Cafes, Parks & More",
     description:
-      "Discover verified pet-friendly places in Athens, Greece. Find dog-friendly cafes, pet-friendly hotels, parks, vets, groomers, and pet shops with maps and contact details.",
+      "Choose a category to browse pet-friendly places in Athens. Hotels, cafes, parks, pet shops, vets, grooming, and pet taxi services.",
     canonicalPath: "/",
     keywords:
-      "pet-friendly Athens Greece, dog-friendly cafes Athens, pet hotels Athens, dog parks Athens, pet shops Athens, veterinarians Athens, pet grooming Athens, pet taxi Athens",
+      "pet-friendly Athens categories, pet-friendly hotels Athens, pet-friendly cafes Athens, vets Athens, pet shops Athens",
   });
 
+  const navigate = useNavigate();
   const { data: listings, isLoading, error } = useListings();
   const allListings = listings || [];
 
-  const scrollToCategory = (category: string) => {
-    const element = document.getElementById(category);
+  const scrollToCategories = () => {
+    const element = document.getElementById("categories");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const scrollToListings = () => {
-    const firstCategory = document.getElementById(CATEGORY_ORDER[0]);
-    if (firstCategory) {
-      firstCategory.scrollIntoView({ behavior: "smooth" });
-    }
+  const goToCategory = (category: string) => {
+    navigate(`/category/${category}`);
   };
 
   if (error) {
     return (
       <main className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Unable to load listings</h2>
+          <h2 className="text-2xl font-bold mb-4">Unable to load categories</h2>
           <p className="text-muted-foreground mb-4">Please try again later</p>
           <Button onClick={() => window.location.reload()}>Refresh</Button>
         </div>
@@ -56,22 +95,13 @@ const Index = () => {
     );
   }
 
-  const pageStructuredData = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: "Pet-Friendly Athens",
-      url: "https://petfriendlyathens.com",
-      description: "Complete directory of pet-friendly places in Athens",
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "Pet-Friendly Athens",
-      url: "https://petfriendlyathens.com",
-      logo: "https://petfriendlyathens.com/favicon.jpg",
-    },
-  ];
+  const pageStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Pet-Friendly Athens",
+    url: "https://petfriendlyathens.com",
+    description: "Category directory for pet-friendly places in Athens",
+  };
 
   return (
     <>
@@ -80,31 +110,55 @@ const Index = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageStructuredData) }}
       />
       <div className="min-h-screen">
-        <Hero onCategoryClick={scrollToCategory} onExploreClick={scrollToListings} />
+        <Hero onCategoryClick={goToCategory} onExploreClick={scrollToCategories} />
 
         <main className="bg-background">
-          {isLoading ? (
-            <div className="container mx-auto px-4 py-16">
-              <div className="space-y-8">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="space-y-4">
-                    <Skeleton className="h-8 w-48" />
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {[1, 2, 3].map((j) => (
-                        <Skeleton key={j} className="h-64" />
-                      ))}
+          <section id="categories" className="py-16">
+            <div className="container mx-auto px-4">
+              <header className="text-center max-w-3xl mx-auto mb-10">
+                <h2 className="text-3xl md:text-4xl font-bold mb-3">Browse By Category</h2>
+                <p className="text-muted-foreground">
+                  Select a category to see all listings that belong to it.
+                </p>
+              </header>
+
+              {isLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {CATEGORY_ORDER.map((category) => (
+                    <div key={category} className="rounded-lg border p-6 space-y-3">
+                      <Skeleton className="h-6 w-40" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-24" />
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {CATEGORY_ORDER.map((category) => {
+                    const meta = categoryMeta[category];
+                    const Icon = meta.icon;
+                    const count = allListings.filter((listing) => listing.category === category).length;
+
+                    return (
+                      <article key={category} className="rounded-lg border p-6 bg-card">
+                        <div className="flex items-center gap-3 mb-3">
+                          <Icon className="w-6 h-6 text-primary" />
+                          <h3 className="text-xl font-semibold">{meta.label}</h3>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4">{meta.description}</p>
+                        <p className="text-sm mb-4">
+                          <span className="font-semibold">{count}</span> listing{count === 1 ? "" : "s"}
+                        </p>
+                        <Button asChild className="w-full">
+                          <Link to={`/category/${category}`}>View {meta.label}</Link>
+                        </Button>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          ) : (
-            <>
-              {CATEGORY_ORDER.map((category) => (
-                <CategorySection key={category} category={category} listings={allListings} />
-              ))}
-            </>
-          )}
+          </section>
         </main>
 
         <footer className="bg-secondary/50 py-8 mt-16" role="contentinfo">
