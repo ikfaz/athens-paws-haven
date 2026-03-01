@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import Hero from "@/components/Hero";
 import CategorySection from "@/components/CategorySection";
@@ -31,9 +30,9 @@ const Index = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Pet-Friendly Athens",
-    "description": "Complete directory of pet-friendly places in Athens",
-    "url": "https://petfriendlyathens.com"
+    name: "Pet-Friendly Athens",
+    description: "Complete directory of pet-friendly places in Athens",
+    url: "https://petfriendlyathens.com",
   };
 
   return (
@@ -44,60 +43,60 @@ const Index = () => {
       />
       <div className="min-h-screen">
         <Hero onCategoryClick={scrollToCategory} />
-        
-        <main className="bg-background">
-        {isLoading ? (
-          <div className="container mx-auto px-4 py-16">
-            <div className="space-y-8">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="space-y-4">
-                  <Skeleton className="h-8 w-48" />
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[1, 2, 3].map((j) => (
-                      <Skeleton key={j} className="h-64" />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
-            <CategorySection category="hotel" listings={listings || []} />
-            <CategorySection category="cafe" listings={listings || []} />
-            <CategorySection category="park" listings={listings || []} />
-            <CategorySection category="petshop" listings={listings || []} />
-            <CategorySection category="vet" listings={listings || []} />
-            <CategorySection category="grooming" listings={listings || []} />
-            <CategorySection category="taxi" listings={listings || []} />
-          </>
-        )}
-      </main>
 
-      <footer className="bg-secondary/50 py-8 mt-16" role="contentinfo">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground text-center md:text-left">
-              © 2025 Pet-Friendly Athens. Discover the best places for you and your pet.
-            </p>
-            <div className="flex flex-wrap gap-4 items-center justify-center">
-              <Button variant="link" asChild className="text-muted-foreground">
-                <Link to="/privacy-policy">Privacy Policy</Link>
-              </Button>
-              <Button variant="link" asChild className="text-muted-foreground">
-                <Link to="/terms-of-service">Terms of Service</Link>
-              </Button>
-              <Button variant="link" asChild className="text-muted-foreground">
-                <Link to="/cookie-policy">Cookie Policy</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link to="/admin/login">Admin</Link>
-              </Button>
+        <main className="bg-background">
+          {isLoading ? (
+            <div className="container mx-auto px-4 py-16">
+              <div className="space-y-8">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="space-y-4">
+                    <Skeleton className="h-8 w-48" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[1, 2, 3].map((j) => (
+                        <Skeleton key={j} className="h-64" />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <>
+              <CategorySection category="hotel" listings={listings || []} />
+              <CategorySection category="cafe" listings={listings || []} />
+              <CategorySection category="park" listings={listings || []} />
+              <CategorySection category="petshop" listings={listings || []} />
+              <CategorySection category="vet" listings={listings || []} />
+              <CategorySection category="grooming" listings={listings || []} />
+              <CategorySection category="taxi" listings={listings || []} />
+            </>
+          )}
+        </main>
+
+        <footer className="bg-secondary/50 py-8 mt-16" role="contentinfo">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-muted-foreground text-center md:text-left">
+                (c) {new Date().getFullYear()} Pet-Friendly Athens. Discover the best places for you and your pet.
+              </p>
+              <div className="flex flex-wrap gap-4 items-center justify-center">
+                <Button variant="link" asChild className="text-muted-foreground">
+                  <Link to="/privacy-policy">Privacy Policy</Link>
+                </Button>
+                <Button variant="link" asChild className="text-muted-foreground">
+                  <Link to="/terms-of-service">Terms of Service</Link>
+                </Button>
+                <Button variant="link" asChild className="text-muted-foreground">
+                  <Link to="/cookie-policy">Cookie Policy</Link>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <Link to="/admin/login">Admin</Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
     </>
   );
 };

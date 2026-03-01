@@ -2,13 +2,17 @@ import { Listing } from "@/types/listing";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
-import { stripProtocol, ensureProtocol } from "@/lib/utils";
+import { stripProtocol, toSafeHttpUrl, toSafeImageSrc } from "@/lib/utils";
 
 interface ListingCardProps {
   listing: Listing;
 }
 
 const ListingCard = ({ listing }: ListingCardProps) => {
+  const websiteUrl = listing.website ? toSafeHttpUrl(listing.website) : null;
+  const mapsUrl = toSafeHttpUrl(listing.mapsLink);
+  const imageSrc = toSafeImageSrc(listing.image);
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -22,8 +26,8 @@ const ListingCard = ({ listing }: ListingCardProps) => {
     },
     ...(listing.phone && { "telephone": listing.phone }),
     ...(listing.email && { "email": listing.email }),
-    ...(listing.website && { "url": `https://${listing.website}` }),
-    "image": listing.image
+    ...(websiteUrl && { "url": websiteUrl }),
+    "image": imageSrc
   };
 
   return (
@@ -35,7 +39,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
       <Card className="overflow-hidden shadow-card hover:shadow-hover transition-all duration-300 animate-fade-in">
         <div className="relative h-48 overflow-hidden">
           <img
-            src={listing.image}
+            src={imageSrc}
             alt={`${listing.name} - Pet-friendly ${listing.category} in Athens`}
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             loading="lazy"
@@ -71,34 +75,40 @@ const ListingCard = ({ listing }: ListingCardProps) => {
               <span>{listing.email}</span>
             </a>
           )}
-          {listing.website && (
+          {websiteUrl && (
             <a 
-              href={ensureProtocol(listing.website)}
+              href={websiteUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
-              <span>{stripProtocol(listing.website)}</span>
+              <span>{stripProtocol(websiteUrl)}</span>
             </a>
           )}
         </div>
 
-        <Button 
-          variant="default" 
-          className="w-full"
-          asChild
-        >
-          <a 
-            href={listing.mapsLink} 
-            target="_blank" 
-            rel="noopener noreferrer"
+        {mapsUrl ? (
+          <Button
+            variant="default"
+            className="w-full"
+            asChild
           >
-            <MapPin className="w-4 h-4" />
-            View on Google Maps
-            <ExternalLink className="w-4 h-4" />
-          </a>
-        </Button>
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MapPin className="w-4 h-4" />
+              View on Google Maps
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </Button>
+        ) : (
+          <Button variant="outline" className="w-full" disabled>
+            Map link unavailable
+          </Button>
+        )}
       </CardContent>
     </Card>
     </>

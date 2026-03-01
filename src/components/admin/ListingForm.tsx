@@ -23,18 +23,20 @@ export const ListingForm = ({ onSubmit, defaultValues, isLoading }: ListingFormP
     formState: { errors },
   } = useForm<ListingFormData>({
     resolver: zodResolver(listingSchema),
-    defaultValues: defaultValues ? {
-      name: defaultValues.name,
-      category: defaultValues.category,
-      address: defaultValues.address,
-      description: defaultValues.description,
-      phone: defaultValues.phone || "",
-      email: defaultValues.email || "",
-      website: defaultValues.website || "",
-      mapsLink: defaultValues.mapsLink,
-      image: defaultValues.image,
-      tag: defaultValues.tag || "",
-    } : undefined,
+    defaultValues: defaultValues
+      ? {
+          name: defaultValues.name,
+          category: defaultValues.category,
+          address: defaultValues.address,
+          description: defaultValues.description,
+          phone: defaultValues.phone || "",
+          email: defaultValues.email || "",
+          website: defaultValues.website || "",
+          mapsLink: defaultValues.mapsLink,
+          image: defaultValues.image,
+          tag: defaultValues.tag || "",
+        }
+      : undefined,
   });
 
   const category = watch("category");
@@ -43,7 +45,7 @@ export const ListingForm = ({ onSubmit, defaultValues, isLoading }: ListingFormP
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="name">Name *</Label>
-        <Input id="name" {...register("name")} placeholder="e.g., Cozy Paws Café" />
+        <Input id="name" {...register("name")} placeholder="e.g., Cozy Paws Cafe" />
         {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
       </div>
 
@@ -51,13 +53,15 @@ export const ListingForm = ({ onSubmit, defaultValues, isLoading }: ListingFormP
         <Label htmlFor="category">Category *</Label>
         <Select
           value={category}
-          onValueChange={(value) => setValue("category", value as any)}
+          onValueChange={(value) =>
+            setValue("category", value as ListingFormData["category"], { shouldValidate: true })
+          }
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="cafe">Café</SelectItem>
+            <SelectItem value="cafe">Cafe</SelectItem>
             <SelectItem value="hotel">Hotel</SelectItem>
             <SelectItem value="vet">Veterinary</SelectItem>
             <SelectItem value="petshop">Pet Shop</SelectItem>

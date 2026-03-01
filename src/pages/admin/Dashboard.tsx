@@ -12,7 +12,6 @@ import { Listing } from "@/types/listing";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ListingForm } from "@/components/admin/ListingForm";
 import { useUpdateListing } from "@/hooks/useListings";
-import { toast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ const Dashboard = () => {
 
   const handleUpdate = (data: any) => {
     if (!editingListing) return;
-    
+
     updateMutation.mutate(
       { id: editingListing.id, ...data },
       {
@@ -84,12 +83,13 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-1 text-sm">
-                  <p>Cafés: {getCategoryCount("cafe")}</p>
+                  <p>Cafes: {getCategoryCount("cafe")}</p>
                   <p>Hotels: {getCategoryCount("hotel")}</p>
                   <p>Vets: {getCategoryCount("vet")}</p>
                   <p>Pet Shops: {getCategoryCount("petshop")}</p>
                   <p>Parks: {getCategoryCount("park")}</p>
                   <p>Grooming: {getCategoryCount("grooming")}</p>
+                  <p>Pet Taxi: {getCategoryCount("taxi")}</p>
                 </div>
               </CardContent>
             </Card>

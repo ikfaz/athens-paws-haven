@@ -10,8 +10,30 @@ export function stripProtocol(url: string): string {
 }
 
 export function ensureProtocol(url: string): string {
-  if (!url.match(/^https?:\/\//)) {
-    return `https://${url}`;
+  const trimmedUrl = url.trim();
+  if (!trimmedUrl.match(/^https?:\/\//i)) {
+    return `https://${trimmedUrl}`;
   }
-  return url;
+  return trimmedUrl;
+}
+
+export function toSafeHttpUrl(url: string): string | null {
+  try {
+    const parsedUrl = new URL(ensureProtocol(url));
+    if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+      return null;
+    }
+    return parsedUrl.toString();
+  } catch {
+    return null;
+  }
+}
+
+export function toSafeImageSrc(url: string): string {
+  const trimmedUrl = url.trim();
+  if (trimmedUrl.startsWith("/")) {
+    return trimmedUrl;
+  }
+
+  return toSafeHttpUrl(trimmedUrl) ?? "/placeholder.svg";
 }

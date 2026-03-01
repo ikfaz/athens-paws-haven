@@ -6,6 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+const jsonHeaders = { ...corsHeaders, "Content-Type": "application/json" };
 
 interface RawPlace {
   name: string;
@@ -143,17 +144,64 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
 
-    const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !SUPABASE_SERVICE_ROLE_KEY) {
+      throw new Error("Supabase env vars are not configured");
+    }
+
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Missing Authorization header" }),
+        { status: 401, headers: jsonHeaders }
+      );
+    }
+
+    const userClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      global: {
+        headers: {
+          Authorization: authHeader,
+        },
+      },
+    });
+    const { data: userData, error: userError } = await userClient.auth.getUser();
+    if (userError || !userData.user) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: jsonHeaders }
+      );
+    }
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    const { data: adminRole, error: roleError } = await supabase
+      .from("user_roles")
+      .select("id")
+      .eq("user_id", userData.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (roleError) {
+      console.error("Role check error:", roleError);
+      return new Response(
+        JSON.stringify({ error: "Unable to verify permissions" }),
+        { status: 500, headers: jsonHeaders }
+      );
+    }
+    if (!adminRole) {
+      return new Response(
+        JSON.stringify({ error: "Forbidden: admin access required" }),
+        { status: 403, headers: jsonHeaders }
+      );
+    }
 
     const { places } = (await req.json()) as { places: RawPlace[] };
 
     if (!places || !Array.isArray(places) || places.length === 0) {
       return new Response(
         JSON.stringify({ error: "No places provided" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { status: 400, headers: jsonHeaders }
       );
     }
 
@@ -209,13 +257,13 @@ serve(async (req) => {
         total_inserted: totalInserted,
         classified: allClassified.length,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: jsonHeaders }
     );
   } catch (e) {
     console.error("Import error:", e);
     return new Response(
       JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { status: 500, headers: jsonHeaders }
     );
   }
 });

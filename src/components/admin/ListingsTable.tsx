@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash2, ExternalLink } from "lucide-react";
+import { toSafeHttpUrl } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,16 +25,14 @@ interface ListingsTableProps {
 export const ListingsTable = ({ listings, onEdit, onDelete }: ListingsTableProps) => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      cafe: "bg-amber-500",
-      hotel: "bg-blue-500",
-      vet: "bg-green-500",
-      petshop: "bg-purple-500",
-      park: "bg-emerald-500",
-      grooming: "bg-pink-500",
-    };
-    return colors[category] || "bg-gray-500";
+  const categoryMeta: Record<Listing["category"], { color: string; label: string }> = {
+    cafe: { color: "bg-amber-500", label: "Cafe" },
+    hotel: { color: "bg-blue-500", label: "Hotel" },
+    vet: { color: "bg-green-500", label: "Vet" },
+    petshop: { color: "bg-purple-500", label: "Pet Shop" },
+    park: { color: "bg-emerald-500", label: "Park" },
+    grooming: { color: "bg-pink-500", label: "Grooming" },
+    taxi: { color: "bg-cyan-500", label: "Pet Taxi" },
   };
 
   return (
@@ -57,50 +56,60 @@ export const ListingsTable = ({ listings, onEdit, onDelete }: ListingsTableProps
                 </TableCell>
               </TableRow>
             ) : (
-              listings.map((listing) => (
-                <TableRow key={listing.id}>
-                  <TableCell className="font-medium">{listing.name}</TableCell>
-                  <TableCell>
-                    <Badge className={getCategoryColor(listing.category)}>
-                      {listing.category}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="max-w-xs truncate">{listing.address}</TableCell>
-                  <TableCell>
-                    {listing.tag && (
-                      <Badge variant="outline">{listing.tag}</Badge>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => window.open(listing.mapsLink, "_blank")}
-                        title="Open in Maps"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => onEdit(listing)}
-                        title="Edit"
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setDeleteId(listing.id)}
-                        title="Delete"
-                      >
-                        <Trash2 className="h-4 w-4 text-destructive" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+              listings.map((listing) => {
+                const safeMapsUrl = toSafeHttpUrl(listing.mapsLink);
+                const category = categoryMeta[listing.category];
+
+                return (
+                  <TableRow key={listing.id}>
+                    <TableCell className="font-medium">{listing.name}</TableCell>
+                    <TableCell>
+                      <Badge className={category.color}>
+                        {category.label}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="max-w-xs truncate">{listing.address}</TableCell>
+                    <TableCell>
+                      {listing.tag && (
+                        <Badge variant="outline">{listing.tag}</Badge>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            if (safeMapsUrl) {
+                              window.open(safeMapsUrl, "_blank", "noopener,noreferrer");
+                            }
+                          }}
+                          title="Open in Maps"
+                          disabled={!safeMapsUrl}
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onEdit(listing)}
+                          title="Edit"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setDeleteId(listing.id)}
+                          title="Delete"
+                        >
+                          <Trash2 className="h-4 w-4 text-destructive" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>

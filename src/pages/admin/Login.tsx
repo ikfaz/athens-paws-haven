@@ -21,15 +21,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         navigate("/admin/dashboard", { replace: true });
       }
     });
 
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         navigate("/admin/dashboard", { replace: true });
       }
@@ -40,8 +38,7 @@ const Login = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate inputs
+
     const validation = authSchema.safeParse({ email, password });
     if (!validation.success) {
       const errors = validation.error.errors;
@@ -74,15 +71,14 @@ const Login = () => {
     } else {
       toast({
         title: "Success",
-        description: "Account created successfully! You can now log in.",
+        description: "Account created successfully. You can now log in.",
       });
     }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate inputs
+
     const validation = authSchema.safeParse({ email, password });
     if (!validation.success) {
       const errors = validation.error.errors;
@@ -125,7 +121,7 @@ const Login = () => {
               <TabsTrigger value="login">Login</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
@@ -147,7 +143,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    placeholder="••••••••"
+                    placeholder="********"
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
@@ -177,7 +173,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    placeholder="••••••••"
+                    placeholder="********"
                     minLength={8}
                   />
                 </div>
