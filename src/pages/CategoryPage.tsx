@@ -27,6 +27,23 @@ const categoryTitles: Record<Listing["category"], string> = {
   taxi: "Pet Taxi",
 };
 
+const categoryIntroCopy: Record<Listing["category"], string> = {
+  hotel:
+    "Discover pet-friendly hotels in Athens with practical details for traveling with dogs or cats, including location and direct contact links.",
+  cafe:
+    "Explore dog-friendly cafes and pet-friendly restaurants in Athens to find places where you can dine or enjoy coffee with your pet.",
+  park:
+    "Find parks and outdoor spaces in Athens suitable for pet walks, daily exercise, and relaxed time with your companion animal.",
+  petshop:
+    "Browse pet shops in Athens for food, toys, grooming items, and everyday supplies for dogs, cats, and other pets.",
+  vet:
+    "Locate veterinary clinics and pet care services in Athens, including trusted options for routine checkups and urgent needs.",
+  grooming:
+    "Compare pet grooming services in Athens to find baths, trims, and hygiene care based on location and contact convenience.",
+  taxi:
+    "See pet taxi and pet transport options in Athens when you need safe travel support for clinic visits, airport runs, or local rides.",
+};
+
 const isCategory = (value: string | undefined): value is Listing["category"] => {
   if (!value) {
     return false;
@@ -109,7 +126,7 @@ const CategoryPage = () => {
           <div className="container mx-auto px-4">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">{categoryTitles[category]}</h1>
             <p className="text-muted-foreground">
-              All listings in this category are shown below.
+              {categoryIntroCopy[category]}
             </p>
             <div className="flex flex-wrap gap-2 mt-5">
               {CATEGORIES.map((item) => (
