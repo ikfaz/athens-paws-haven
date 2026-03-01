@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isBlockedImageUrl } from "@/lib/utils";
 
 const httpUrlSchema = z.string().trim().url("Invalid URL").refine(
   (value) => value.startsWith("http://") || value.startsWith("https://"),
@@ -14,6 +15,9 @@ const googleMapsUrlSchema = httpUrlSchema.refine(
 const imageUrlSchema = z.string().trim().refine(
   (value) => value.startsWith("/") || value.startsWith("http://") || value.startsWith("https://"),
   "Image URL must start with http://, https://, or /"
+).refine(
+  (value) => value.startsWith("/") || !isBlockedImageUrl(value),
+  "Google Maps links and blocked image endpoints are not allowed for image URLs"
 );
 
 export const listingSchema = z.object({

@@ -4,6 +4,7 @@ import { Upload, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import * as XLSX from "xlsx";
+import { isLikelyImageUrl } from "@/lib/utils";
 
 interface RawPlace {
   name: string;
@@ -14,12 +15,17 @@ interface RawPlace {
   maps_link: string;
 }
 
+interface ParseResult {
+  places: RawPlace[];
+  replacedImages: number;
+}
+
 export const ImportListings = () => {
   const [isImporting, setIsImporting] = useState(false);
   const [progress, setProgress] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const parseFile = async (file: File): Promise<RawPlace[]> => {
+  const parseFile = async (file: File): Promise<ParseResult> => {
     const data = await file.arrayBuffer();
     const workbook = XLSX.read(data);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -35,6 +41,7 @@ export const ImportListings = () => {
 
     const dataRows = hasHeaders ? rows.slice(1) : rows;
     const places: RawPlace[] = [];
+    let replacedImages = 0;
 
     for (const row of dataRows) {
       const cells = row as any[];
@@ -48,23 +55,30 @@ export const ImportListings = () => {
       const mapsLink = String(cells[16] || "").trim();
 
       // Use the large photo (col 13) or small photo (col 12)
-      const image = String(cells[13] || cells[12] || "").trim();
+      const rawImage = String(cells[13] || cells[12] || "").trim();
 
       // Skip empty rows, header rows, or permanently closed places
       if (!name || name === "name" || !address || !mapsLink) continue;
       if (status === "CLOSED_PERMANENTLY") continue;
+
+      let image = "/placeholder.svg";
+      if (rawImage && isLikelyImageUrl(rawImage)) {
+        image = rawImage;
+      } else {
+        replacedImages += 1;
+      }
 
       places.push({
         name,
         website: website || undefined,
         phone: phone || undefined,
         address,
-        image: image || "/placeholder.svg",
+        image,
         maps_link: mapsLink,
       });
     }
 
-    return places;
+    return { places, replacedImages };
   };
 
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +89,7 @@ export const ImportListings = () => {
     setProgress("Parsing file...");
 
     try {
-      const places = await parseFile(file);
+      const { places, replacedImages } = await parseFile(file);
 
       if (places.length === 0) {
         toast({
@@ -84,6 +98,13 @@ export const ImportListings = () => {
           variant: "destructive",
         });
         return;
+      }
+
+      if (replacedImages > 0) {
+        toast({
+          title: "Image guardrails applied",
+          description: `${replacedImages} listing image URL(s) were blocked or invalid and replaced with placeholder images.`,
+        });
       }
 
       setProgress(`Found ${places.length} places. Sending for AI classification...`);

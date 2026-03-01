@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Listing } from "@/types/listing";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,11 @@ interface ListingCardProps {
 const ListingCard = ({ listing }: ListingCardProps) => {
   const websiteUrl = listing.website ? toSafeHttpUrl(listing.website) : null;
   const mapsUrl = toSafeHttpUrl(listing.mapsLink);
-  const imageSrc = toSafeImageSrc(listing.image);
+  const [imageSrc, setImageSrc] = useState(() => toSafeImageSrc(listing.image));
+
+  useEffect(() => {
+    setImageSrc(toSafeImageSrc(listing.image));
+  }, [listing.image]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -44,6 +49,14 @@ const ListingCard = ({ listing }: ListingCardProps) => {
             alt={`${listing.name} - Pet-friendly ${listing.category} in Athens`}
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             loading="lazy"
+            onError={(event) => {
+              const img = event.currentTarget;
+              if (img.src.endsWith("/placeholder.svg")) {
+                return;
+              }
+              setImageSrc("/placeholder.svg");
+              trackEvent("listing_image_fallback", { listing_id: listing.id, category: listing.category });
+            }}
           />
         <div className="absolute inset-0 bg-gradient-card" />
       </div>
