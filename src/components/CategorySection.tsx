@@ -1,6 +1,7 @@
 import { Listing } from "@/types/listing";
 import ListingCard from "./ListingCard";
 import { Coffee, Hotel, Stethoscope, Store, TreePine, Scissors, Car } from "lucide-react";
+import { getImageQualityScore } from "@/lib/utils";
 
 interface CategorySectionProps {
   category: "cafe" | "hotel" | "vet" | "petshop" | "park" | "grooming" | "taxi";
@@ -49,7 +50,15 @@ const CategorySection = ({ category, listings }: CategorySectionProps) => {
   const info = categoryInfo[category];
   const Icon = info.icon;
   
-  const categoryListings = listings.filter((listing) => listing.category === category);
+  const categoryListings = listings
+    .filter((listing) => listing.category === category)
+    .sort((a, b) => {
+      const imageScoreDiff = getImageQualityScore(b.image) - getImageQualityScore(a.image);
+      if (imageScoreDiff !== 0) {
+        return imageScoreDiff;
+      }
+      return a.name.localeCompare(b.name);
+    });
 
   if (categoryListings.length === 0) return null;
 

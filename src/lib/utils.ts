@@ -75,3 +75,49 @@ export function toSafeImageSrc(url: string): string {
 
   return toSafeHttpUrl(trimmedUrl) ?? "/placeholder.svg";
 }
+
+function parseImageDimensions(url: string): { width: number; height: number } | null {
+  const sizeTokenMatch = url.match(/w(\d+)-h(\d+)/i);
+  if (sizeTokenMatch) {
+    const width = Number(sizeTokenMatch[1]);
+    const height = Number(sizeTokenMatch[2]);
+    if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+      return { width, height };
+    }
+  }
+
+  try {
+    const parsed = new URL(url);
+    const width = Number(parsed.searchParams.get("w") || parsed.searchParams.get("width"));
+    const height = Number(parsed.searchParams.get("h") || parsed.searchParams.get("height"));
+    if (Number.isFinite(width) && Number.isFinite(height) && width > 0 && height > 0) {
+      return { width, height };
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+export function getImageQualityScore(imageUrl: string): number {
+  const safeImageUrl = toSafeImageSrc(imageUrl);
+  if (safeImageUrl === "/placeholder.svg") {
+    return 0;
+  }
+
+  const dimensions = parseImageDimensions(safeImageUrl);
+  if (!dimensions) {
+    // Valid image URL, but unknown size: medium priority.
+    return 2;
+  }
+
+  const area = dimensions.width * dimensions.height;
+  if (area >= 800000) {
+    return 4;
+  }
+  if (area >= 250000) {
+    return 3;
+  }
+  return 2;
+}
