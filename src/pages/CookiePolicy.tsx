@@ -1,8 +1,16 @@
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const CookiePolicy = () => {
+  useSEO({
+    title: "Cookie Policy | Pet-Friendly Athens",
+    description:
+      "Learn how cookies are used on Pet-Friendly Athens and how you can manage cookie preferences.",
+    canonicalPath: "/cookie-policy",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">

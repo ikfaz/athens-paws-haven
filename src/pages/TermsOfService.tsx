@@ -1,8 +1,16 @@
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const TermsOfService = () => {
+  useSEO({
+    title: "Terms of Service | Pet-Friendly Athens",
+    description:
+      "Review the terms and conditions for using the Pet-Friendly Athens directory and services.",
+    canonicalPath: "/terms-of-service",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">

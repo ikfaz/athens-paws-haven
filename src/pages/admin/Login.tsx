@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useSEO } from "@/hooks/useSEO";
 import { z } from "zod";
 
 const authSchema = z.object({
@@ -15,6 +16,13 @@ const authSchema = z.object({
 });
 
 const Login = () => {
+  useSEO({
+    title: "Admin Login | Pet-Friendly Athens",
+    description: "Secure admin access for managing listings on Pet-Friendly Athens.",
+    canonicalPath: "/admin/login",
+    noindex: true,
+  });
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

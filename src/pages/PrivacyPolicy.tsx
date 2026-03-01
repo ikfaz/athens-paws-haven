@@ -1,8 +1,16 @@
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const PrivacyPolicy = () => {
+  useSEO({
+    title: "Privacy Policy | Pet-Friendly Athens",
+    description:
+      "Read the privacy policy for Pet-Friendly Athens and learn how information is collected, used, and protected.",
+    canonicalPath: "/privacy-policy",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">

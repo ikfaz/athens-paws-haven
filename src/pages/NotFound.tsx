@@ -1,7 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useSEO } from "@/hooks/useSEO";
 
 const NotFound = () => {
+  useSEO({
+    title: "Page Not Found | Pet-Friendly Athens",
+    description: "The page you requested could not be found.",
+    canonicalPath: "/404",
+    noindex: true,
+  });
+
   const location = useLocation();
 
   useEffect(() => {

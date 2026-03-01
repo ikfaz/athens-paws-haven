@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
 import { stripProtocol, toSafeHttpUrl, toSafeImageSrc } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
 interface ListingCardProps {
   listing: Listing;
@@ -60,6 +61,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           {listing.phone && (
             <a 
               href={`tel:${listing.phone}`}
+              onClick={() => trackEvent("listing_phone_click", { listing_id: listing.id, category: listing.category })}
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <Phone className="w-4 h-4" />
@@ -69,6 +71,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           {listing.email && (
             <a 
               href={`mailto:${listing.email}`}
+              onClick={() => trackEvent("listing_email_click", { listing_id: listing.id, category: listing.category })}
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <Mail className="w-4 h-4" />
@@ -80,6 +83,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
               href={websiteUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("listing_website_click", { listing_id: listing.id, category: listing.category })}
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
@@ -98,6 +102,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("listing_maps_click", { listing_id: listing.id, category: listing.category })}
             >
               <MapPin className="w-4 h-4" />
               View on Google Maps

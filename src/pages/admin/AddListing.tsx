@@ -4,9 +4,17 @@ import { ListingForm } from "@/components/admin/ListingForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAddListing } from "@/hooks/useListings";
+import { useSEO } from "@/hooks/useSEO";
 import { ArrowLeft } from "lucide-react";
 
 const AddListing = () => {
+  useSEO({
+    title: "Add Listing | Pet-Friendly Athens Admin",
+    description: "Create a new listing in the Pet-Friendly Athens admin panel.",
+    canonicalPath: "/admin/add-listing",
+    noindex: true,
+  });
+
   const navigate = useNavigate();
   const addMutation = useAddListing();
 

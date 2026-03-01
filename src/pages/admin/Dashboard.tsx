@@ -12,8 +12,16 @@ import { Listing } from "@/types/listing";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ListingForm } from "@/components/admin/ListingForm";
 import { useUpdateListing } from "@/hooks/useListings";
+import { useSEO } from "@/hooks/useSEO";
 
 const Dashboard = () => {
+  useSEO({
+    title: "Admin Dashboard | Pet-Friendly Athens",
+    description: "Manage listings and monitor directory coverage for Pet-Friendly Athens.",
+    canonicalPath: "/admin/dashboard",
+    noindex: true,
+  });
+
   const navigate = useNavigate();
   const { data: listings, isLoading } = useListings();
   const deleteMutation = useDeleteListing();
